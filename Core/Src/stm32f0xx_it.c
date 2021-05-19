@@ -219,7 +219,7 @@ void TIM14_IRQHandler(void)
 		//Подумать, может это состояние убрать
 		case check_output://Проверяем есть ли напряжение на выходе
 		{
-			if (ADC_Result[0] > U_START)
+			if (ADC_Result[1] > U_START)
 			{
 				powerState = run;
 			}
@@ -237,7 +237,7 @@ void TIM14_IRQHandler(void)
 
 		case run:
 		{
-			if (ADC_Result[0] > U_TARGET )
+			if (ADC_Result[1] > U_TARGET )
 			{
 				//duty -= (ADC_Result[0] - U_TARGET) / 32;
 				//ограничение
@@ -245,7 +245,7 @@ void TIM14_IRQHandler(void)
 				if (duty <DEAD_TIME ) duty = DEAD_TIME;
 			}
 
-			if (ADC_Result[0] < U_TARGET )
+			if (ADC_Result[1] < U_TARGET )
 			{
 				//duty += (U_TARGET - ADC_Result[0]) / 32;
 				duty ++;
@@ -253,7 +253,7 @@ void TIM14_IRQHandler(void)
 			}
 
 			//if ((ADC_Result[0] < U_KZ) &&(duty == 250))
-			if (ADC_Result[0] < U_KZ)
+			if (ADC_Result[1] < U_KZ)
 			{
 				kzCounter++;
 				if (kzCounter == TIME_KZ)
